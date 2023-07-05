@@ -4,11 +4,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const path = require('path');
+require('dotenv').config();
 require('ejs')
 
-const port = process.env.PORT || 5000
+//Se prueba la conexion a la base de datps
+const { conectarDB } = require('./database'); 
+conectarDB();
 
-const path = require('path');
+const port = process.env.PORT || 5000
 
 const app = express();
 
@@ -33,4 +36,4 @@ app.use('/api', require('./routes/reserva.routes'));
 // TODO: Si la petición no coincide con ninguna de las rutas declaradas, mostrar error 404
 
 // Starting the server
-app.listen(port, () => console.log(`Servidor en el puerto${port}`));
+app.listen(port, () => console.log(`Servidor en el puerto: ${port}`));
