@@ -9,7 +9,7 @@ formNuevaReserva.addEventListener('submit', async (e) => {
     const telefono = document.getElementById('telefono').value
     const fecha_salida = document.getElementById('fecha_salida').value
     const fecha_llegada = document.getElementById('fecha_llegada').value
-
+    const costo = document.getElementById('costo').value
 
     const usuario = {
         nombre,
@@ -17,7 +17,8 @@ formNuevaReserva.addEventListener('submit', async (e) => {
         dni,
         telefono,
         fecha_salida,
-        fecha_llegada
+        fecha_llegada,
+        costo
     }
 
 
@@ -29,9 +30,27 @@ formNuevaReserva.addEventListener('submit', async (e) => {
         }
     });
 
+
+    if (respuesta.status !== 201) {
+        return Swal.fire({
+            title: '¡Error!',
+            text: 'Hubo un error al momento de crear la reserva',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
     const datos = await respuesta.json()
 
-    alert(datos.message);
-    window.location.href = '/api'
+    Swal.fire({
+        title: '¡Reserva creada exitosamente!',
+        text: datos.message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
+
+    setTimeout(()=> {
+        window.location.href = '/api'
+    }, 1500)
 
 });

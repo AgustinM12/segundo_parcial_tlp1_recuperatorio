@@ -13,12 +13,14 @@ const mostrarReservas = (reservas, tablaElement) => {
     reservas.forEach(reserva => {
         registros += `
           <tr>
+               <td>${reserva.codigo}</td>
                <td>${reserva.nombre}</td>
                <td>${reserva.apellido}</td>
                <td>${reserva.dni}</td>
                <td>${reserva.telefono}</td>
                <td>${reserva.fecha_salida}</td>
                <td>${reserva.fecha_llegada}</td>
+               <td>${reserva.costo}</td>
                <td>
                <div class="row">
                <a href="/api/actualizar-reserva/${reserva.id}" class="btn btn-sm btn-warning">Editar</a>
@@ -39,16 +41,47 @@ const eliminarUsuario = async (e) => {
     console.log(e)
     const id = e.target.dataset.id;
 
-const respuesta = await fetch(`/api/app/${id}`, {
-    method: 'DELETE',
-})
+    const resultado = await Swal.fire({
+        title: '¿Está seguro de eliminar la reserva?',
+        text: "¡No podras deshacer este cambio!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar'
+    })
 
-const datos = await respuesta.json();
+    if (!resultado.isConfirmed) {
+        return;
+    }
 
-alert(datos.message);
+    const respuesta = await fetch(`/api/app/${id}`, {
+        method: 'DELETE',
+    })
 
-window.location.href = '/api'
+    const datos = await respuesta.json();
 
+    if (respuesta.status !== 200) {
+        Swal.fire({
+            title: 'Error',
+            text: datos.message,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        })
+    } else {
+        Swal.fire({
+            title: 'Reserva eliminada correctamente',
+            text: datos.message,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        })
+    }
+        // Redireccionar al usuario
+
+    setTimeout(() => {
+        window.location.href = "/api"
+    }, 1500);
 };
 
 

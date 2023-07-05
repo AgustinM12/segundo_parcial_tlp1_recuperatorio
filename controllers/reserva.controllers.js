@@ -62,7 +62,8 @@ ctrlReservas.crearReserva = async (req, res) => {
         dni,
         telefono,
         fecha_salida,
-        fecha_llegada
+        fecha_llegada,
+        costo
     } = req.body;
 
 
@@ -73,7 +74,8 @@ ctrlReservas.crearReserva = async (req, res) => {
             dni,
             telefono,
             fecha_salida,
-            fecha_llegada
+            fecha_llegada,
+            costo
         });
 
         // los manda a la DB

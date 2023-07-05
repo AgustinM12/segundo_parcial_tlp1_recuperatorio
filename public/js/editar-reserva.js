@@ -7,6 +7,7 @@ const dni = document.getElementById('dni')
 const telefono = document.getElementById('telefono')
 const fecha_salida = document.getElementById('fecha_salida')
 const fecha_llegada = document.getElementById('fecha_llegada')
+const costo = document.getElementById('costo')
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -21,6 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     telefono.value = respuesta.telefono;
     fecha_salida.value = respuesta.fecha_salida;
     fecha_llegada.value = respuesta.fecha_llegada;
+    costo.value = respuesta.costo;
+
 });
 
 
@@ -33,8 +36,8 @@ formActualizarReserva.addEventListener('submit', async (e) => {
         dni: dni.value,
         telefono: telefono.value,
         fecha_salida: fecha_salida.value,
-        fecha_llegada: fecha_llegada.value
-
+        fecha_llegada: fecha_llegada.value,
+        costo: costo.value
     }
 
 
@@ -49,10 +52,26 @@ formActualizarReserva.addEventListener('submit', async (e) => {
 
     const datos = await respuesta.json();
 
+    if (respuesta.status !== 200) {
+        return Swal.fire({
+            title: 'Error',
+            text: datos.message,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+
+
     // Mostrar mensajes al usuario
-    alert(datos.message);
-
+    Swal.fire({
+        title: 'Reserva actualizada',
+        text: datos.message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    })
     // Redireccionar al usuario
-    window.location.href = '/api'
-
+    setTimeout(() => {
+        window.location.href = "/api"
+    }, 1500);
 })
