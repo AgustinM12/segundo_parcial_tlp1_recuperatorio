@@ -2,32 +2,50 @@
 
 const router = require('express').Router();
 
+const {
+RenderObtenerReservas,
+RenderCrearReservas,
+RenderEditarReservas,
+crearReserva,
+obtenerReservas,
+obtenerUnaReserva,
+editarReserva,
+eliminarReserva
+
+} = require('../controllers/reserva.controllers')
 
 // ==========================================
 //         Rutas para renderizar vistas
 // ==========================================
 
 // Obtener todas las reservas
+router.get('/', RenderObtenerReservas)
 
 // Formulario para crear una reserva
+router.get('/nueva-reserva', RenderCrearReservas)
 
 // Formulario para actualizar una reserva
+router.get('/actualizar-reserva/:id', RenderEditarReservas)
+
 
 // ==========================================
 //         Rutas para CRUD de reservas
 // ==========================================
 
 // Obtener todas las reservas
-router.get('/api/',);
+router.get('/app/', obtenerReservas);
  
 // Crear una reserva
-router.post('/api/',);
+router.post('/nueva-reserva', crearReserva);
+
+router.get('/app/:id', obtenerUnaReserva);
  
 // Actualizar una reserva
-router.put('/api/:id',);
+router.put('/app/:id', editarReserva);
  
 // Eliminar una reserva de forma lógica
-router.delete('/api/:id',);
+router.delete('/app/:id', eliminarReserva);
+;
 
  
  module.exports = router;

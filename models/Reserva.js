@@ -29,13 +29,13 @@ const Reserva = sequelize.define('Reserva', {
         type: DataTypes.STRING,
         allowNull: false
     },
-      fecha_entrada: {
+      fecha_salida: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
     },
-    fecha_salida: {
+    fecha_llegada: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: true
     },
     estado: {
         type: DataTypes.BOOLEAN,
@@ -63,7 +63,7 @@ const Reserva = sequelize.define('Reserva', {
     tableName: 'reservas'
 });
 
-User.sync({force: true}).then(()=> {
+Reserva.sync({force: false}).then(()=> {
     console.log('Tabla de reservas creada')
 })
 
